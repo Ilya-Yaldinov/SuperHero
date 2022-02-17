@@ -21,9 +21,23 @@ class SuperHero
 {
     public static void Main(string[] args)
     {
-        string json = File.ReadAllText(@"D:\superhero.json");
-        var superHeroes = JsonConvert.DeserializeObject<SuperHeroes>(json);
+        FileWorker.FileConvert(@"D:\superhero.json");
+    }
+}
+
+class FileWorker
+{
+    public static void FileConvert(string filePath)
+    {
+        string json = File.ReadAllText(filePath);
+        SuperHeroes superHeroes = JsonConvert.DeserializeObject<SuperHeroes>(json);
         string path = $"{System.Environment.CurrentDirectory}\\{superHeroes.squadName}";
+        DirectoryCreate(path);
+        FileCreate(path, superHeroes);
+    }
+
+    public static void DirectoryCreate(string path)
+    {
         if (Directory.Exists(path))
         {
             Directory.Delete(path, true);
@@ -33,7 +47,11 @@ class SuperHero
         {
             Directory.CreateDirectory(path);
         }
-        for(var i = 0; i < superHeroes.members.Length; i++)
+    }
+    
+    public static void FileCreate(string path, SuperHeroes superHeroes)
+    {
+        for (var i = 0; i < superHeroes.members.Length; i++)
         {
             int powerNum = 0;
             FileStream fstream = File.Open($"{path}\\{superHeroes.members[i].name}.csv", FileMode.OpenOrCreate);
