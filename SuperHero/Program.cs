@@ -59,7 +59,7 @@ class FileWorker
             for (var c = 0; c < superHeroes.members[i].powers.Length; c++)
             {
                 powerNum++;
-                File.AppendAllText($"{path}\\{superHeroes.members[i].name}.csv", $"{powerNum} {superHeroes.members[i].powers[c]}\n");
+                File.AppendAllText($"{path}\\{superHeroes.members[i].name}.csv", $"{powerNum}\t{superHeroes.members[i].powers[c]}\n");
             }
         }
     }
